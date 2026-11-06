@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tarot de Marsella · el método de Jodorowsky</title>
+  <meta name="description" content="Aprende a leer el Tarot de Marsella como lo enseña Alejandro Jodorowsky.">
+  <meta name="theme-color" content="#1c1712">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="iconos/icono-192.png">
+  <link rel="apple-touch-icon" href="iconos/icono-192.png">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <header class="barra">
+    <a href="#/inicio" class="marca"><span class="sol">✶</span> Tarot de Marsella</a>
+    <nav class="nav-sup">
+      <a href="#/inicio" data-sec="inicio">Inicio</a>
+      <a href="#/curso" data-sec="curso">Curso</a>
+      <a href="#/cartas" data-sec="cartas">Cartas</a>
+      <a href="#/numeros" data-sec="numeros">Números</a>
+      <a href="#/practica" data-sec="practica">Práctica</a>
+      <a href="#/tirar" data-sec="tirar">Tirar</a>
+      <a href="#/foto" data-sec="foto">Foto</a>
+      <a href="#/diario" data-sec="diario">Diario</a>
+      <a href="#/ajustes" data-sec="ajustes">⚙</a>
+    </nav>
+  </header>
+
+  <main id="vista" tabindex="-1"></main>
+
+  <nav class="nav-inf">
+    <a href="#/inicio" data-sec="inicio"><span>⌂</span>Inicio</a>
+    <a href="#/curso" data-sec="curso"><span>❦</span>Curso</a>
+    <a href="#/cartas" data-sec="cartas"><span>❖</span>Cartas</a>
+    <a href="#/tirar" data-sec="tirar"><span>✦</span>Tirar</a>
+    <a href="#/foto" data-sec="foto"><span>◉</span>Foto</a>
+  </nav>
+
+  <div id="modal" class="modal" hidden></div>
+
+  <script src="js/datos.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/lectura.js"></script>
+  <script src="js/foto.js"></script>
+  <script>
+    // En localhost no se registra, para que los cambios se vean al instante mientras se edita
+    if ('serviceWorker' in navigator && location.protocol === 'https:') {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>

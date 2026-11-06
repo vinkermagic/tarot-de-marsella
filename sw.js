@@ -1,0 +1,92 @@
+// Service worker: guarda la app y las cartas para usarla sin conexión.
+// Cambia VERSION cada vez que modifiques archivos para que el teléfono descargue lo nuevo.
+const VERSION = "tarot-v1";
+const ARCHIVOS = [
+ "./",
+ "index.html",
+ "estilo.css",
+ "manifest.webmanifest",
+ "js/datos.js",
+ "js/app.js",
+ "js/lectura.js",
+ "js/foto.js",
+ "iconos/icono-192.png",
+ "iconos/icono-512.png",
+ "cartas/bastos-01.jpg",
+ "cartas/bastos-02.jpg",
+ "cartas/bastos-03.jpg",
+ "cartas/bastos-04.jpg",
+ "cartas/bastos-05.jpg",
+ "cartas/bastos-06.jpg",
+ "cartas/bastos-07.jpg",
+ "cartas/bastos-08.jpg",
+ "cartas/bastos-09.jpg",
+ "cartas/bastos-10.jpg",
+ "cartas/bastos-caballero.jpg",
+ "cartas/bastos-paje.jpg",
+ "cartas/bastos-reina.jpg",
+ "cartas/bastos-rey.jpg",
+ "cartas/copas-01.jpg",
+ "cartas/copas-02.jpg",
+ "cartas/copas-03.jpg",
+ "cartas/copas-04.jpg",
+ "cartas/copas-05.jpg",
+ "cartas/copas-06.jpg",
+ "cartas/copas-07.jpg",
+ "cartas/copas-08.jpg",
+ "cartas/copas-09.jpg",
+ "cartas/copas-10.jpg",
+ "cartas/copas-caballero.jpg",
+ "cartas/copas-paje.jpg",
+ "cartas/copas-reina.jpg",
+ "cartas/copas-rey.jpg",
+ "cartas/espadas-01.jpg",
+ "cartas/espadas-02.jpg",
+ "cartas/espadas-caballero.jpg",
+ "cartas/espadas-paje.jpg",
+ "cartas/espadas-reina.jpg",
+ "cartas/espadas-rey.jpg",
+ "cartas/m00.jpg",
+ "cartas/m01.jpg",
+ "cartas/m02.jpg",
+ "cartas/m03.jpg",
+ "cartas/m04.jpg",
+ "cartas/m05.jpg",
+ "cartas/m06.jpg",
+ "cartas/m07.jpg",
+ "cartas/m08.jpg",
+ "cartas/m09.jpg",
+ "cartas/m10.jpg",
+ "cartas/m11.jpg",
+ "cartas/m12.jpg",
+ "cartas/m13.jpg",
+ "cartas/m14.jpg",
+ "cartas/m15.jpg",
+ "cartas/m16.jpg",
+ "cartas/m17.jpg",
+ "cartas/m18.jpg",
+ "cartas/m19.jpg",
+ "cartas/m20.jpg",
+ "cartas/m21.jpg",
+ "cartas/oros-01.jpg",
+ "cartas/oros-02.jpg",
+ "cartas/oros-05.jpg",
+ "cartas/oros-08.jpg",
+ "cartas/oros-09.jpg",
+ "cartas/oros-10.jpg",
+ "cartas/oros-caballero.jpg",
+ "cartas/oros-paje.jpg",
+ "cartas/oros-reina.jpg",
+ "cartas/oros-rey.jpg"
+];
+self.addEventListener("install", (e) => {
+  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(ARCHIVOS)).then(() => self.skipWaiting()));
+});
+self.addEventListener("activate", (e) => {
+  e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== VERSION).map((k) => caches.delete(k)))).then(() => self.clients.claim()));
+});
+self.addEventListener("fetch", (e) => {
+  const url = new URL(e.request.url);
+  if (e.request.method !== "GET" || url.origin !== location.origin) return; // la API y YouTube van directo a la red
+  e.respondWith(caches.match(e.request, { ignoreSearch: true }).then((r) => r || fetch(e.request)));
+});
